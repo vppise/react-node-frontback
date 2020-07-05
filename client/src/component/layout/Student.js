@@ -45,10 +45,11 @@ import axios from 'axios';
                 <div className="container">
                     <div className="row">
                         <div className="input-field col s6 l12">
+                            
                         <form autoComplete="off" onSubmit={e => onSubmit(e)}>
                         <input placeholder="Name" name="name" value={name} onChange={e => onChange(e)} id="name" type="text" className="validate"/>
                         <input placeholder="Email id" type="email" name="email" value={email} onChange={e => onChange(e)} id="email"/>
-                        <input placeholder="Mobile Number" type="number" name="mobile" value={mobile} onChange={e => onChange(e)} id="mo"/>
+                        <input placeholder="Mobile Number" type="number" name="mobile" value={mobile} onChange={e => onChange(e)} id="mo" maxLength="10" size="10" pattern="\d*"/>
                         <textarea placeholder="Address" name="address" onChange={e => onChange(e)} value={address} id="ads" cols="30" rows="10"></textarea>
                         <label>Choose a course:</label>
                         <select className="browser-default" name="course" defaultValue={course} onChange={e => onChange(e)}>

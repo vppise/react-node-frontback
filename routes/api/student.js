@@ -52,4 +52,20 @@ router.post('/',[
     // res.send('Student route');
 })
 
+// @route   GET api/student
+// @desc    get student all data
+// @access  public
+
+router.get('/', async (req, res) => {
+    try {
+        const students = await Student.find().populate('student',['name','email', 'mobile', 'address', 'course', 'date']);
+        res.json(students);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('server error');
+    }
+})
+
+
+
 module.exports = router;
