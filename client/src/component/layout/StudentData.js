@@ -1,29 +1,65 @@
-import React, { Fragment, useState } from 'react'
-import axios from 'axios'
+import React, { Fragment } from 'react';
+import axios from 'axios';
+import Moment from 'react-moment';
 
 // const [name, email ,mobile , address , course, date ] = useState()
 
 class StudentData extends React.Component {
     
     state = {
-        name: "",
-        mobile: "",
-        email: ""
+       students: []
     }
-  
-       componentDidMount(){
-           axios.get('/api/student')
-           .then(res => {
-               console.log(res.data[0].name);
-               this.setState({name: res.data[0].name});
-               this.setState({mobile: res.data[0].mobile});
-               this.setState({email: res.data[0].email});
-               this.setState({name: res.data[0].name});
-           })
-       }
-        
-    
-       
+
+    componentDidMount = () => {
+        this.getStudentData();
+    };
+
+
+     getStudentData = () => {
+        axios.get('/api/student')
+        .then((response) => {
+            const data = response.data;
+            this.setState({students: data})
+            console.log(data)
+            console.log("data received")
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+    }     
+
+
+    // displayStudentData = () => {
+
+    //   return students.map((student, index) => {
+    //     const {name, email, mobile, address, course, date} = student
+    //         <div key={index}>
+    //         {/* <td>{student.name}</td>
+    //         <td>{student.email}</td>
+    //         <td>{student.mobile}</td>
+    //         <td>{student.address}</td>
+    //         <td>{student.course}</td>
+    //         <td>{student.date}</td> */}
+    //       </div>
+    //   })
+
+    // }
+
+    renderTableData() {
+      return this.state.students.map((student, index) => {
+         const { id, name, email, mobile, address, course, date } = student //destructuring
+         return (
+            <tr key={id}>
+               <td>{name}</td>
+               <td>{email}</td>
+               <td>{mobile}</td>
+               <td>{address}</td>
+               <td>{course}</td>
+              <Moment format="DD/MM/YYYY"><td>{date}</td></Moment>
+            </tr>
+         )
+      })
+   }
     render(){
 
     return (
@@ -45,14 +81,7 @@ class StudentData extends React.Component {
         </thead>
 
         <tbody>
-          <tr>
-            <td>{this.state.name}</td>
-            <td>{this.state.email}</td>
-            <td>{this.state.mobile}</td>
-            <td>$0.87</td>
-            <td>$0.87</td>
-            <td>$0.87</td>
-          </tr>
+      {this.renderTableData()}
         </tbody>
       </table>
                     </div>
